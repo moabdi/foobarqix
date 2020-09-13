@@ -29,7 +29,7 @@ public class FooBarQixTest {
     @Test
     public void should_toFooBarQix_return_FooAndBar() {
         Assert.assertEquals(FooBarQix.toFooBarQix(15), "FooBarBar");
-        Assert.assertEquals(FooBarQix.toFooBarQix(30), "FooFooBar");
+        Assert.assertEquals(FooBarQix.toFooBarQix(30), "FooBarFoo");
         Assert.assertEquals(FooBarQix.toFooBarQix(53), "BarFoo");
     }
 
@@ -40,6 +40,6 @@ public class FooBarQixTest {
 
     @Test
     public void should_toFooBarQix_return_BarAndQix() {
-        Assert.assertEquals(FooBarQix.toFooBarQix(70), "QixBarQix");
+        Assert.assertEquals(FooBarQix.toFooBarQix(70), "BarQixQix");
     }
 }
