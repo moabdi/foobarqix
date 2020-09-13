@@ -1,22 +1,35 @@
 package com.kata;
 
+import static java.util.stream.Collectors.joining;
+import static java.lang.Character.getNumericValue;
+
 import java.util.Map;
+import java.util.TreeMap;
 
 public class FooBarQix {
 
-    private static Map<Integer, String> DIGIT_MAP = Map.of(3, "Foo", 5, "Bar", 7, "Qix");
+    static Map<Integer, String> DIGIT_MAP;
 
-    public static String toFooBarQix(int number) {
+    static {
+        DIGIT_MAP = new TreeMap<>();
+        DIGIT_MAP.put(3, "Foo");
+        DIGIT_MAP.put(5, "Bar");
+        DIGIT_MAP.put(7, "Qix");
+    }
 
-        StringBuilder result = new StringBuilder().append(number % 3 == 0 ? "Foo" : "")
-                .append(number % 5 == 0 ? "Bar" : "").append(number % 7 == 0 ? "Qix" : "");
+    public static String toFooBarQix(int value) {
+        String result = "";
+        result += modulo(value);
+        result += contains(value);
+        return result.isEmpty() ? String.valueOf(value) : result;
+    }
 
-        String num = String.valueOf(number);
-        for (int i = 0; i < num.length(); i++) {
-            char value = num.charAt(i);
-            result.append(DIGIT_MAP.getOrDefault(Character.getNumericValue(value), ""));
-        }
+    private static String modulo(int value) {
+        return DIGIT_MAP.keySet().stream().filter(key -> value % key == 0).map(DIGIT_MAP::get).collect(joining());
+    }
 
-        return result.toString().isEmpty() ? num : result.toString();
+    private static String contains(int value) {
+        return String.valueOf(value).codePoints()
+                .mapToObj(intAsChar -> DIGIT_MAP.getOrDefault(getNumericValue(intAsChar), "")).collect(joining());
     }
 }
