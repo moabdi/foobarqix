@@ -1,45 +1,30 @@
 package com.kata;
 
+import java.util.Map;
+import java.util.stream.IntStream;
+
 import org.junit.Assert;
 import org.junit.Test;
 
 public class FooBarQixTest {
+    private static Map<Integer, String> DIGIT_MAP = Map.of(3, "Foo", 5, "Bar", 7, "Qix");
 
     @Test
-    public void should_toFooBarQix_return_Foo() {
-        Assert.assertEquals(FooBarQix.toFooBarQix(6), "Foo");
-        Assert.assertEquals(FooBarQix.toFooBarQix(13), "Foo");
-        Assert.assertEquals(FooBarQix.toFooBarQix(33), "FooFooFoo");
+    public void should_toFooBarQix_work_as_nativeFooBarQix() {
+        IntStream.rangeClosed(1, 100)
+                .forEach(number -> Assert.assertEquals(FooBarQix.toFooBarQix(number), nativeFooBarQix(number)));
     }
 
-    @Test
-    public void should_toFooBarQix_return_Bar() {
-        Assert.assertEquals(FooBarQix.toFooBarQix(10), "Bar");
-        Assert.assertEquals(FooBarQix.toFooBarQix(5), "BarBar");
-        Assert.assertEquals(FooBarQix.toFooBarQix(55), "BarBarBar");
-    }
+    private static String nativeFooBarQix(int number) {
+        StringBuilder result = new StringBuilder().append(number % 3 == 0 ? "Foo" : "")
+                .append(number % 5 == 0 ? "Bar" : "").append(number % 7 == 0 ? "Qix" : "");
 
-    @Test
-    public void should_toFooBarQix_return_Qix() {
-        Assert.assertEquals(FooBarQix.toFooBarQix(14), "Qix");
-        Assert.assertEquals(FooBarQix.toFooBarQix(7), "QixQix");
-        Assert.assertEquals(FooBarQix.toFooBarQix(77), "QixQixQix");
-    }
+        String num = String.valueOf(number);
+        for (int i = 0; i < num.length(); i++) {
+            char value = num.charAt(i);
+            result.append(DIGIT_MAP.getOrDefault(Character.getNumericValue(value), ""));
+        }
 
-    @Test
-    public void should_toFooBarQix_return_FooAndBar() {
-        Assert.assertEquals(FooBarQix.toFooBarQix(15), "FooBarBar");
-        Assert.assertEquals(FooBarQix.toFooBarQix(30), "FooBarFoo");
-        Assert.assertEquals(FooBarQix.toFooBarQix(53), "BarFoo");
-    }
-
-    @Test
-    public void should_toFooBarQix_return_FooAndQix() {
-        Assert.assertEquals(FooBarQix.toFooBarQix(21), "FooQix");
-    }
-
-    @Test
-    public void should_toFooBarQix_return_BarAndQix() {
-        Assert.assertEquals(FooBarQix.toFooBarQix(70), "BarQixQix");
+        return result.toString().isEmpty() ? num : result.toString();
     }
 }
