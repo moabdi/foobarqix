@@ -8,7 +8,7 @@ import java.util.TreeMap;
 
 public class FooBarQix {
 
-    static Map<Integer, String> DIGIT_MAP;
+    private static Map<Integer, String> DIGIT_MAP;
 
     static {
         DIGIT_MAP = new TreeMap<>();
