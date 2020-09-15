@@ -1,30 +1,43 @@
 package com.kata;
 
-import java.util.Map;
-import java.util.stream.IntStream;
-
-import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 public class FooBarQixTest {
-    private static Map<Integer, String> DIGIT_MAP = Map.of(3, "Foo", 5, "Bar", 7, "Qix");
 
     @Test
-    public void should_toFooBarQix_work_as_nativeFooBarQix() {
-        IntStream.rangeClosed(1, 100)
-                .forEach(number -> Assert.assertEquals(FooBarQix.toFooBarQix(number), nativeFooBarQix(number)));
+    public void should_toFooBarQix_return_Foo() {
+        assertEquals("Foo", FooBarQix.toFooBarQix(13));
+        assertEquals("Foo", FooBarQix.toFooBarQix(6));
+        assertEquals("FooFoo", FooBarQix.toFooBarQix(3));
+        assertEquals("FooFooFoo", FooBarQix.toFooBarQix(33));
     }
 
-    private static String nativeFooBarQix(int number) {
-        StringBuilder result = new StringBuilder().append(number % 3 == 0 ? "Foo" : "")
-                .append(number % 5 == 0 ? "Bar" : "");
+    @Test
+    public void should_toFooBarQix_return_Bar() {
+        assertEquals("Bar", FooBarQix.toFooBarQix(10));
+        assertEquals("BarBar", FooBarQix.toFooBarQix(5));
+        assertEquals("BarBarBar", FooBarQix.toFooBarQix(55));
+    }
 
-        String num = String.valueOf(number);
-        for (int i = 0; i < num.length(); i++) {
-            char value = num.charAt(i);
-            result.append(DIGIT_MAP.getOrDefault(Character.getNumericValue(value), ""));
-        }
+    @Test
+    public void should_toFooBarQix_return_Qix() {
+        assertEquals("Qix", FooBarQix.toFooBarQix(7));
+        assertEquals("QixQix", FooBarQix.toFooBarQix(77));
+    }
 
-        return result.toString().isEmpty() ? num : result.toString();
+    @Test
+    public void should_toFooBarQix_return_FooBarQix() {
+        assertEquals("FooBarBar", FooBarQix.toFooBarQix(15));
+        assertEquals("FooQix", FooBarQix.toFooBarQix(27));
+        assertEquals("BarFoo", FooBarQix.toFooBarQix(53));
+        assertEquals("BarFooBar", FooBarQix.toFooBarQix(35));
+        assertEquals("FooBarQixBar", FooBarQix.toFooBarQix(75));
+    }
+
+    @Test
+    public void should_toFooBarQix_return_same_value() {
+        assertEquals("1", FooBarQix.toFooBarQix(1));
+        assertEquals("14", FooBarQix.toFooBarQix(14));
     }
 }
