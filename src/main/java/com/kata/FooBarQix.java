@@ -8,13 +8,15 @@ import java.util.TreeMap;
 
 public class FooBarQix {
 
-    private static Map<Integer, String> DIGIT_MAP;
+    private static Map<Integer, String> DIV_MAP;
+    private static Map<Integer, String> CONT_MAP;
 
     static {
-        DIGIT_MAP = new TreeMap<>();
-        DIGIT_MAP.put(3, "Foo");
-        DIGIT_MAP.put(5, "Bar");
-        DIGIT_MAP.put(7, "Qix");
+        DIV_MAP = new TreeMap<>();
+        DIV_MAP.put(3, "Foo");
+        DIV_MAP.put(5, "Bar");
+        CONT_MAP = new TreeMap<>(DIV_MAP);
+        CONT_MAP.put(7, "Qix");
     }
 
     public static String toFooBarQix(int value) {
@@ -25,11 +27,11 @@ public class FooBarQix {
     }
 
     private static String modulo(int value) {
-        return DIGIT_MAP.keySet().stream().filter(key -> value % key == 0).map(DIGIT_MAP::get).collect(joining());
+        return DIV_MAP.keySet().stream().filter(key -> value % key == 0).map(DIV_MAP::get).collect(joining());
     }
 
     private static String contains(int value) {
         return String.valueOf(value).codePoints()
-                .mapToObj(intAsChar -> DIGIT_MAP.getOrDefault(getNumericValue(intAsChar), "")).collect(joining());
+                .mapToObj(intAsChar -> CONT_MAP.getOrDefault(getNumericValue(intAsChar), "")).collect(joining());
     }
 }

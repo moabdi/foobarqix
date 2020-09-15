@@ -17,7 +17,7 @@ public class FooBarQixTest {
 
     private static String nativeFooBarQix(int number) {
         StringBuilder result = new StringBuilder().append(number % 3 == 0 ? "Foo" : "")
-                .append(number % 5 == 0 ? "Bar" : "").append(number % 7 == 0 ? "Qix" : "");
+                .append(number % 5 == 0 ? "Bar" : "");
 
         String num = String.valueOf(number);
         for (int i = 0; i < num.length(); i++) {
